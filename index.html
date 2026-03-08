@@ -4,19 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Светлая княжна тёмного рода</title>
-    
-    <!-- Шрифт Montserrat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: 'Montserrat', sans-serif;
             min-height: 100vh;
@@ -25,481 +18,174 @@
             justify-content: center;
             padding: 12px;
             opacity: 0;
-            animation: fadeInBody 1.2s cubic-bezier(0.25, 0.1, 0.15, 1) forwards;
-            
-            /* --- Исправленный фон: легко и без лагов --- */
+            animation: fadeIn 1.2s cubic-bezier(.25,.1,.15,1) forwards;
             position: relative;
-            background-image: url('image.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: scroll;
+            background: url('image.jpg') center/cover no-repeat;
         }
-
-        /* Белый слой — без размытия, просто прозрачность */
         body::before {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.75);
-            z-index: 0;
+            inset: 0;
+            background: rgba(255,255,255,.75);
             pointer-events: none;
         }
 
         .book-card {
             position: relative;
-            z-index: 10;
+            z-index: 1;
             max-width: 1100px;
             width: 100%;
             display: flex;
             flex-wrap: wrap;
             align-items: flex-start;
             gap: 30px;
-            background: white;
+            background: #fff;
             border-radius: 28px;
             padding: 24px;
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,.2);
             opacity: 0;
-            transform: translateY(30px) scale(0.98);
-            animation: softFloatIn 1.4s cubic-bezier(0.25, 0.1, 0.15, 1) 0.15s forwards;
+            transform: translateY(30px) scale(.98);
+            animation: floatIn 1.4s cubic-bezier(.25,.1,.15,1) .15s forwards;
         }
-        
-        /* ========== ОПТИМИЗАЦИЯ ПОД ТЕЛЕФОНЫ ========== */
-        @media (max-width: 600px) {
-            body {
-                padding: 0;
-                background-image: none !important; /* убираем фоновое изображение */
-                background-color: #ffffff; /* чистый белый фон */
-            }
-            
-            body::before {
-                display: none; /* убираем белый слой */
-            }
-            
-            .book-card {
-                padding: 24px 20px 32px;
-                border-radius: 0;
-                gap: 20px;
-                box-shadow: none;
-                background: #ffffff;
-                min-height: 100vh;
-                align-content: flex-start;
-                margin: 0;
-                max-width: 100%;
-                /* Изменяем порядок flex-элементов для мобильных */
-                display: flex;
-                flex-direction: column;
-            }
-            
-            /* Обложка */
-            .cover {
-                flex: 0 0 auto;
-                width: 100%;
-                transform: translateX(0) rotate(0);
-                animation: none;
-                opacity: 1;
-                margin-bottom: 4px;
-                order: 1; /* порядок: обложка первая */
-            }
-            
-            .cover img {
-                max-height: 400px;
-                width: 100%;
-                object-fit: contain;
-                border-radius: 28px;
-                box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.25);
-                transition: transform 0.3s ease;
-            }
 
-            .cover img:active {
-                transform: scale(0.98);
-                transition: transform 0.15s;
-            }
-            
-            .info {
-                flex: 0 0 auto;
-                width: 100%;
-                transform: translateX(0) rotate(0);
-                animation: none;
-                opacity: 1;
-                padding: 0;
-                display: flex;
-                flex-direction: column;
-                order: 2; /* info становится вторым (заголовок, автор, кнопка, потом теги) */
-            }
-            
-            /* Заголовок — чуточку меньше, чем просили, чтобы помещался в 2 строки */
-            .title {
-                font-size: 2rem;  /* уменьшили с 2.2rem до 2rem */
-                font-weight: 700;
-                line-height: 1.2;
-                margin-bottom: 8px;
-                opacity: 1;
-                transform: none;
-                animation: none;
-                max-width: 100%;
-                word-break: break-word;
-                hyphens: auto;
-                letter-spacing: -0.01em;
-                color: #1a1a1a;
-                order: 1;
-            }
-            
-            .author {
-                font-size: 1.2rem;
-                margin-bottom: 16px;
-                opacity: 1;
-                transform: none;
-                animation: none;
-                color: #555;
-                order: 2;
-            }
-            
-            /* Кнопка — теперь перед тегами */
-            .read-button {
-                display: block;
-                width: 100%;
-                background: #000000;
-                color: #ffffff;
-                text-align: center;
-                padding: 22px 20px;
-                border-radius: 26px;
-                font-weight: 700;
-                font-size: 1.4rem;
-                letter-spacing: 0.6px;
-                text-decoration: none;
-                transition: background 0.2s, transform 0.1s;
-                cursor: pointer;
-                border: none;
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-                opacity: 1;
-                transform: none;
-                animation: none;
-                margin: 0 0 20px 0; /* убрали верхний отступ, добавили нижний */
-                -webkit-tap-highlight-color: transparent;
-                order: 3;
-            }
-
-            .read-button:active {
-                background: #222;
-                transform: scale(0.98);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            }
-            
-            /* Контейнер тегов — ПЕРЕМЕЩЁН ПОД КНОПКУ */
-            .tags-genres-container {
-                margin-bottom: 24px;
-                opacity: 1;
-                transform: none;
-                animation: none;
-                padding: 0;
-                cursor: pointer;
-                width: 100%;
-                order: 4; /* теперь после кнопки */
-            }
-            
-            .tags-genres-wrapper {
-                max-height: 135px;
-                overflow: hidden;
-                position: relative;
-                transition: max-height 0.5s cubic-bezier(0.25, 0.1, 0.15, 1);
-                padding: 0 0 8px 0;
-                margin: 0;
-                -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 45px), transparent 100%);
-                mask-image: linear-gradient(to bottom, black calc(100% - 45px), transparent 100%);
-            }
-            
-            .tags-genres-wrapper.expanded {
-                max-height: 1200px;
-                -webkit-mask-image: none;
-                mask-image: none;
-            }
-            
-            .genres {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-                margin-bottom: 16px;
-                padding: 0;
-            }
-            
-            .genre {
-                background: #000000;
-                color: #ffffff;
-                font-weight: 600;
-                font-size: 1rem;
-                padding: 8px 20px;
-                border-radius: 40px;
-                letter-spacing: 0.3px;
-                border: 1px solid #222;
-                font-variant: small-caps;
-                display: inline-block;
-                margin: 2px 0;
-            }
-            
-            .tags {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 8px;
-                padding: 0;
-            }
-            
-            .tag {
-                background: #f5f5f5;
-                color: #333;
-                font-weight: 500;
-                font-size: 0.95rem;
-                padding: 7px 18px;
-                border-radius: 40px;
-                border: 1px solid #d4d4d4;
-                letter-spacing: 0.2px;
-                text-transform: lowercase;
-                font-variant: small-caps;
-                display: inline-block;
-                margin: 2px 0;
-            }
-            
-            .description {
-                font-weight: 400;
-                font-size: 1.1rem;
-                line-height: 1.7;
-                color: #3a3a3a;
-                max-width: 100%;
-                white-space: pre-wrap;
-                word-break: break-word;
-                opacity: 1;
-                transform: none;
-                animation: none;
-                margin-top: 4px;
-                order: 5; /* описание остаётся последним */
-            }
-            
-            /* Полное отключение старых hover-эффектов */
-            .genre:hover,
-            .tag:hover,
-            .cover img:hover,
-            .read-button:hover {
-                transform: none !important;
-                background: unset !important;
-            }
-            
-            .genre:hover {
-                background: #000000 !important;
-            }
-            
-            .tag:hover {
-                background: #f5f5f5 !important;
-                border-color: #d4d4d4 !important;
-            }
-            
-            .read-button:hover {
-                background: #000000 !important;
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
-                transform: none !important;
-            }
-            
-            .cover img:hover {
-                transform: none !important;
-            }
-        }
-        
-        /* Анимации для десктопа (без изменений) */
-        @keyframes fadeInBody {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-        
+        /* COVER */
         .cover {
             flex: 1 1 300px;
             display: flex;
             justify-content: center;
-            position: relative;
             opacity: 0;
             transform: translateX(-25px) rotate(-1deg);
-            animation: softSlideInLeft 1.5s cubic-bezier(0.25, 0.1, 0.15, 1) 0.3s forwards;
+            animation: slideLeft 1.5s cubic-bezier(.25,.1,.15,1) .3s forwards;
         }
-        
         .cover img {
             max-width: 100%;
             height: auto;
             max-height: 500px;
-            width: auto;
             border-radius: 30px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
-            transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.15, 1);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,.3);
+            transition: transform .6s cubic-bezier(.25,.1,.15,1);
         }
-        
-        .cover img:hover {
-            transform: scale(1.03) rotate(0.5deg);
-        }
-        
+        .cover img:hover { transform: scale(1.03) rotate(.5deg); }
+
+        /* INFO */
         .info {
             flex: 1 1 500px;
-            padding: 10px 0;
+            padding: 10px 4px 10px 0;
             opacity: 0;
             transform: translateX(25px) rotate(1deg);
-            animation: softSlideInRight 1.5s cubic-bezier(0.25, 0.1, 0.15, 1) 0.3s forwards;
-            padding-right: 4px;
+            animation: slideRight 1.5s cubic-bezier(.25,.1,.15,1) .3s forwards;
         }
-        
+
         .title {
             font-weight: 700;
             font-size: 2.5rem;
             line-height: 1.2;
             margin-bottom: 10px;
             color: #1a1a1a;
-            letter-spacing: -0.02em;
+            letter-spacing: -.02em;
             opacity: 0;
             transform: translateY(20px);
-            animation: softFadeInUp 1.3s cubic-bezier(0.25, 0.1, 0.15, 1) 0.5s forwards;
+            animation: fadeUp 1.3s cubic-bezier(.25,.1,.15,1) .5s forwards;
         }
-        
         .author {
             font-weight: 500;
             font-size: 1.2rem;
             color: #666;
             margin-bottom: 20px;
-            letter-spacing: -0.01em;
+            letter-spacing: -.01em;
             opacity: 0;
             transform: translateY(20px);
-            animation: softFadeInUp 1.3s cubic-bezier(0.25, 0.1, 0.15, 1) 0.6s forwards;
+            animation: fadeUp 1.3s cubic-bezier(.25,.1,.15,1) .6s forwards;
         }
-        
+
+        /* TAGS */
         .tags-genres-container {
             cursor: pointer;
-            margin-bottom: 35px;
+            position: relative;
+            padding: 8px 0;
+            margin: -8px 0 27px;
             opacity: 0;
             transform: translateY(20px);
-            animation: softFadeInUp 1.4s cubic-bezier(0.25, 0.1, 0.15, 1) 1.0s forwards;
-            position: relative;
-            padding-top: 8px;
-            padding-bottom: 8px;
-            margin-top: -8px;
-            margin-bottom: 27px;
+            animation: fadeUp 1.4s cubic-bezier(.25,.1,.15,1) 1s forwards;
         }
-        
         .tags-genres-wrapper {
             max-height: 128px;
             overflow: hidden;
-            position: relative;
-            transition: max-height 0.5s cubic-bezier(0.25, 0.1, 0.15, 1);
-            padding: 8px 4px 12px 4px;
+            transition: max-height .5s cubic-bezier(.25,.1,.15,1);
+            padding: 8px 4px 12px;
             margin: -4px;
-            mask-image: linear-gradient(to bottom, black calc(100% - 40px), transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 40px), transparent 100%);
+            mask-image: linear-gradient(to bottom, black calc(100% - 40px), transparent);
+            -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 40px), transparent);
         }
-        
         .tags-genres-wrapper.expanded {
             max-height: 800px;
             mask-image: none;
             -webkit-mask-image: none;
         }
-        
         .genres {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
             margin-bottom: 15px;
-            padding-left: 4px;
-            padding-right: 4px;
+            padding: 0 4px;
         }
-        
-        .genre {
-            background: #000000;
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 1rem;
-            padding: 7px 18px;
-            border-radius: 30px;
-            letter-spacing: 0.5px;
-            transition: all 0.5s cubic-bezier(0.25, 0.1, 0.15, 1);
-            border: 1px solid #333333;
-            font-variant: small-caps;
-            display: inline-block;
-            transform: translateZ(0);
-            backface-visibility: hidden;
-            z-index: 10;
-            margin: 2px 0;
-        }
-        
-        .genre:hover {
-            background: #222222;
-            transform: translateY(-2px) scale(1.02);
-            z-index: 20;
-        }
-        
         .tags {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            padding-left: 4px;
-            padding-right: 4px;
+            padding: 0 4px;
         }
-        
+        .genre {
+            background: #000;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 7px 18px;
+            border-radius: 30px;
+            border: 1px solid #333;
+            font-variant: small-caps;
+            transition: all .5s cubic-bezier(.25,.1,.15,1);
+        }
+        .genre:hover { background: #222; transform: translateY(-2px) scale(1.02); }
         .tag {
             background: #f5f5f5;
             color: #444;
             font-weight: 500;
-            font-size: 0.85rem;
+            font-size: .85rem;
             padding: 6px 16px;
             border-radius: 30px;
-            border: 1px solid #dddddd;
-            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.15, 1);
-            letter-spacing: 0.3px;
-            text-transform: lowercase;
+            border: 1px solid #ddd;
             font-variant: small-caps;
-            display: inline-block;
-            transform: translateZ(0);
-            backface-visibility: hidden;
-            z-index: 10;
-            margin: 2px 0;
+            text-transform: lowercase;
+            transition: all .4s cubic-bezier(.25,.1,.15,1);
         }
-        
-        .tag:hover {
-            background: #eaeaea;
-            border-color: #aaaaaa;
-            transform: translateY(-1px) scale(1.02);
-            z-index: 20;
-        }
-        
+        .tag:hover { background: #eaeaea; border-color: #aaa; transform: translateY(-1px) scale(1.02); }
+
+        /* BUTTON */
         .read-button {
             display: block;
             width: 100%;
-            background: #000000;
-            color: #ffffff;
+            background: #000;
+            color: #fff;
             text-align: center;
             padding: 20px 24px;
             border-radius: 20px;
             font-weight: 600;
             font-size: 1.25rem;
-            letter-spacing: 0.5px;
+            letter-spacing: .5px;
             text-decoration: none;
-            transition: all 0.6s cubic-bezier(0.25, 0.1, 0.15, 1);
-            cursor: pointer;
             border: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,.1);
+            transition: all .6s cubic-bezier(.25,.1,.15,1);
             opacity: 0;
             transform: translateY(25px);
-            animation: softFloatUp 1.5s cubic-bezier(0.25, 0.1, 0.15, 1) 1.4s forwards;
+            animation: floatUp 1.5s cubic-bezier(.25,.1,.15,1) 1.4s forwards;
         }
-        
-        .read-button:hover {
-            background: #222222;
-            transform: translateY(-4px) scale(1.01);
-            box-shadow: 0 18px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .read-button:active {
-            transform: translateY(0) scale(0.99);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: all 0.2s ease;
-        }
-        
+        .read-button:hover { background: #222; transform: translateY(-4px) scale(1.01); box-shadow: 0 18px 30px rgba(0,0,0,.2); }
+        .read-button:active { transform: translateY(0) scale(.99); box-shadow: 0 4px 12px rgba(0,0,0,.1); transition-duration: .2s; }
+
+        /* DESCRIPTION */
         .description {
-            font-weight: 400;
             font-size: 1rem;
             line-height: 1.8;
             color: #4a4a4a;
@@ -508,33 +194,119 @@
             word-break: break-word;
             opacity: 0;
             transform: translateY(25px);
-            animation: softFadeInUp 1.6s cubic-bezier(0.25, 0.1, 0.15, 1) 1.6s forwards;
+            animation: fadeUp 1.6s cubic-bezier(.25,.1,.15,1) 1.6s forwards;
         }
-        
-        @keyframes softFloatIn {
-            0% { opacity: 0; transform: translateY(40px) scale(0.96); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        
-        @keyframes softSlideInLeft {
-            0% { opacity: 0; transform: translateX(-40px) rotate(-2deg); }
-            100% { opacity: 1; transform: translateX(0) rotate(0); }
-        }
-        
-        @keyframes softSlideInRight {
-            0% { opacity: 0; transform: translateX(40px) rotate(2deg); }
-            100% { opacity: 1; transform: translateX(0) rotate(0); }
-        }
-        
-        @keyframes softFadeInUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes softFloatUp {
-            0% { opacity: 0; transform: translateY(40px); }
-            60% { transform: translateY(-3px); }
-            100% { opacity: 1; transform: translateY(0); }
+
+        /* ANIMATIONS */
+        @keyframes fadeIn    { to { opacity: 1; } }
+        @keyframes floatIn   { to { opacity: 1; transform: none; } }
+        @keyframes slideLeft { to { opacity: 1; transform: none; } }
+        @keyframes slideRight{ to { opacity: 1; transform: none; } }
+        @keyframes fadeUp    { to { opacity: 1; transform: none; } }
+        @keyframes floatUp   { 60% { transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+
+        /* ===== MOBILE ===== */
+        @media (max-width: 600px) {
+            body { padding: 0; background: #fff; }
+            body::before { display: none; }
+
+            .book-card {
+                flex-direction: column;
+                align-items: center;
+                padding: 24px 20px 32px;
+                border-radius: 0;
+                gap: 0;
+                box-shadow: none;
+                min-height: 100vh;
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
+
+            .cover, .info {
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
+
+            .cover { margin-bottom: 20px; display: flex; justify-content: center; flex: none; width: 100%; }
+            .cover img {
+                max-height: 400px;
+                width: auto;
+                max-width: 100%;
+                object-fit: contain;
+                border-radius: 28px;
+                box-shadow: 0 20px 40px -10px rgba(0,0,0,.25);
+            }
+            .cover img:hover { transform: none; }
+            .cover img:active { transform: scale(.98); }
+
+            .info { display: flex; flex-direction: column; }
+
+            .title {
+                font-size: 2rem;
+                margin-bottom: 8px;
+                animation: none;
+                opacity: 1;
+                transform: none;
+                text-align: center;
+                order: 1;
+            }
+            .author {
+                font-size: 1.2rem;
+                margin-bottom: 16px;
+                animation: none;
+                opacity: 1;
+                transform: none;
+                text-align: center;
+                order: 2;
+            }
+            .read-button {
+                padding: 22px 20px;
+                border-radius: 26px;
+                font-size: 1.4rem;
+                font-weight: 700;
+                margin: 0 0 16px;
+                animation: none;
+                opacity: 1;
+                transform: none;
+                box-shadow: 0 8px 20px rgba(0,0,0,.15);
+                -webkit-tap-highlight-color: transparent;
+                order: 3;
+            }
+            .read-button:hover { background: #000; transform: none; box-shadow: 0 8px 20px rgba(0,0,0,.15); }
+            .read-button:active { background: #222; transform: scale(.98); }
+
+            .description {
+                font-size: 1.1rem;
+                line-height: 1.7;
+                max-width: 100%;
+                margin: 0 0 16px;
+                animation: none;
+                opacity: 1;
+                transform: none;
+                order: 4;
+            }
+            .tags-genres-container {
+                margin: 0 0 16px;
+                padding: 0;
+                animation: none;
+                opacity: 1;
+                transform: none;
+                order: 5;
+            }
+            .tags-genres-wrapper {
+                max-height: 135px;
+                padding: 0 0 8px;
+                margin: 0;
+                -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 45px), transparent);
+                mask-image: linear-gradient(to bottom, black calc(100% - 45px), transparent);
+            }
+            .genres { gap: 10px; margin-bottom: 16px; padding: 0; }
+            .tags { gap: 8px; padding: 0; }
+            .genre { font-size: 1rem; padding: 8px 20px; border-radius: 40px; }
+            .tag   { font-size: .95rem; padding: 7px 18px; border-radius: 40px; }
+            .genre:hover, .tag:hover { transform: none; }
         }
     </style>
 </head>
@@ -543,20 +315,17 @@
         <div class="cover">
             <img src="image.jpg" alt="Обложка книги">
         </div>
-        
         <div class="info">
             <h1 class="title">Светлая княжна тёмного рода. Том #1</h1>
             <div class="author">Евгения Зимина</div>
-            
-            <!-- Контейнер с тегами и жанрами — на десктопе остаётся на месте, на мобильных переместится под кнопку с помощью order -->
-            <div class="tags-genres-container" id="tagsGenresContainer">
-                <div class="tags-genres-wrapper" id="tagsGenresWrapper">
+
+            <div class="tags-genres-container" id="tagsContainer">
+                <div class="tags-genres-wrapper" id="tagsWrapper">
                     <div class="genres">
                         <span class="genre">бояръ-аниме</span>
                         <span class="genre">романтическое фэнтези</span>
                         <span class="genre">приключения</span>
                     </div>
-                    
                     <div class="tags">
                         <span class="tag">#попаданцы</span>
                         <span class="tag">#женская боярка</span>
@@ -576,24 +345,18 @@
                     </div>
                 </div>
             </div>
-            
+
             <a href="https://author.today/reader/480331/4498092" class="read-button" target="_blank" rel="noopener noreferrer">Читать</a>
-            
+
             <p class="description">
 Екатерина – бастард рода Меньшиковых, обладающая редкой светлой магией в семье, известной своими темными магами.
 Ей предстоит доказать, что она достойна возглавить род, несмотря на недоверие, заговоры и свою неопытность.
             </p>
         </div>
     </div>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const container = document.getElementById('tagsGenresContainer');
-            const wrapper = document.getElementById('tagsGenresWrapper');
-            
-            container.addEventListener('click', function() {
-                wrapper.classList.toggle('expanded');
-            });
+        document.getElementById('tagsContainer').addEventListener('click', function() {
+            document.getElementById('tagsWrapper').classList.toggle('expanded');
         });
     </script>
 </body>
