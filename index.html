@@ -207,106 +207,156 @@
 
         /* ===== MOBILE ===== */
         @media (max-width: 600px) {
-            body { padding: 0; background: #fff; }
+            body {
+                padding: 0;
+                background: #fff;
+                animation: none;
+                opacity: 1;
+                align-items: flex-start;
+            }
             body::before { display: none; }
 
-            .book-card {
-                flex-direction: column;
-                align-items: center;
-                padding: 24px 20px 32px;
-                border-radius: 0;
-                gap: 0;
-                box-shadow: none;
+            /* --- phone UI --- */
+            .book-card { display: none; }
+
+            .mobile-view {
+                display: flex !important;
+                width: 100%;
                 min-height: 100vh;
-                animation: none;
-                opacity: 1;
-                transform: none;
+                flex-direction: column;
+                background: #fff;
+                position: relative;
+                overflow-x: hidden;
             }
 
-            .cover, .info {
-                animation: none;
-                opacity: 1;
-                transform: none;
+            .mob-bg-blur {
+                position: absolute;
+                top: -20px; left: -20px;
+                width: calc(100% + 40px);
+                height: 480px;
+                filter: blur(2px);
+                z-index: 1;
+                opacity: 0.9;
+                background-image: url('image.jpg');
+                background-size: cover;
+                background-position: center;
             }
 
-            .cover { margin-bottom: 20px; display: flex; justify-content: center; flex: none; width: 100%; }
-            .cover img {
-                max-height: 400px;
-                width: auto;
-                max-width: 100%;
-                object-fit: contain;
-                border-radius: 28px;
-                box-shadow: 0 20px 40px -10px rgba(0,0,0,.25);
+            .mob-cover {
+                position: absolute;
+                top: 40px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 290px;
+                height: 420px;
+                border-radius: 30px;
+                z-index: 4;
+                box-shadow: 0 8px 30px rgba(0,0,0,.2);
+                background-image: url('image.jpg');
+                background-size: cover;
+                background-position: center;
             }
-            .cover img:hover { transform: none; }
-            .cover img:active { transform: scale(.98); }
 
-            .info { display: flex; flex-direction: column; }
+            .mob-main {
+                background: #fff;
+                border-radius: 40px 40px 0 0;
+                padding: 65px 25px 40px;
+                box-shadow: 0 -10px 30px rgba(0,0,0,.1);
+                position: relative;
+                z-index: 3;
+                margin-top: 415px;
+                flex: 1;
+            }
 
-            .title {
-                font-size: 2rem;
-                margin-bottom: 8px;
-                animation: none;
-                opacity: 1;
-                transform: none;
-                text-align: center;
-                order: 1;
-            }
-            .author {
-                font-size: 1.2rem;
-                margin-bottom: 16px;
-                animation: none;
-                opacity: 1;
-                transform: none;
-                text-align: center;
-                order: 2;
-            }
-            .read-button {
-                padding: 22px 20px;
-                border-radius: 26px;
-                font-size: 1.4rem;
+            .mob-title {
+                font-size: 28px;
                 font-weight: 700;
-                margin: 0 0 16px;
-                animation: none;
-                opacity: 1;
-                transform: none;
-                box-shadow: 0 8px 20px rgba(0,0,0,.15);
-                -webkit-tap-highlight-color: transparent;
-                order: 3;
+                color: #1a1a1a;
+                text-align: center;
+                line-height: 1.2;
+                margin-bottom: 8px;
             }
-            .read-button:hover { background: #000; transform: none; box-shadow: 0 8px 20px rgba(0,0,0,.15); }
-            .read-button:active { background: #222; transform: scale(.98); }
+            .mob-author {
+                font-size: 18px;
+                color: #777;
+                text-align: center;
+                margin-bottom: 18px;
+                font-weight: 600;
+            }
 
-            .description {
-                font-size: 1.1rem;
-                line-height: 1.7;
-                max-width: 100%;
-                margin: 0 0 16px;
-                animation: none;
-                opacity: 1;
-                transform: none;
-                order: 4;
+            .mob-read-btn {
+                display: block;
+                width: 100%;
+                background: #000;
+                color: #fff;
+                text-align: center;
+                padding: 22px;
+                border-radius: 20px;
+                font-size: 18px;
+                font-weight: 600;
+                text-decoration: none;
+                margin-bottom: 28px;
+                -webkit-tap-highlight-color: transparent;
             }
-            .tags-genres-container {
-                margin: 0 0 16px;
-                padding: 0;
-                animation: none;
-                opacity: 1;
-                transform: none;
-                order: 5;
+            .mob-read-btn:active { background: #222; }
+
+            .mob-desc {
+                font-size: 15px;
+                line-height: 1.6;
+                color: #333;
+                margin-bottom: 22px;
+                cursor: pointer;
             }
-            .tags-genres-wrapper {
+            .mob-desc-inner {
+                max-height: 170px;
+                overflow: hidden;
+                position: relative;
+                transition: max-height .4s ease;
+            }
+            .mob-desc-inner.expanded { max-height: 1000px; }
+            .mob-desc-inner::after {
+                content: '';
+                position: absolute;
+                bottom: 0; left: 0; right: 0;
+                height: 40px;
+                background: linear-gradient(to bottom, transparent, #fff);
+                transition: opacity .3s;
+                pointer-events: none;
+            }
+            .mob-desc-inner.expanded::after { opacity: 0; }
+
+            .mob-tags {
+                cursor: pointer;
+            }
+            .mob-tags-inner {
                 max-height: 135px;
-                padding: 0 0 8px;
-                margin: 0;
-                -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 45px), transparent);
-                mask-image: linear-gradient(to bottom, black calc(100% - 45px), transparent);
+                overflow: hidden;
+                position: relative;
+                transition: max-height .4s ease;
             }
-            .genres { gap: 10px; margin-bottom: 16px; padding: 0; }
-            .tags { gap: 8px; padding: 0; }
-            .genre { font-size: 1rem; padding: 8px 20px; border-radius: 40px; }
-            .tag   { font-size: .95rem; padding: 7px 18px; border-radius: 40px; }
-            .genre:hover, .tag:hover { transform: none; }
+            .mob-tags-inner.expanded { max-height: 800px; }
+            .mob-tags-inner::after {
+                content: '';
+                position: absolute;
+                bottom: 0; left: 0; right: 0;
+                height: 45px;
+                background: linear-gradient(to bottom, transparent, #fff);
+                transition: opacity .3s;
+                pointer-events: none;
+            }
+            .mob-tags-inner.expanded::after { opacity: 0; }
+
+            .mob-genres {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-bottom: 16px;
+            }
+            .mob-tags-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
         }
     </style>
 </head>
@@ -354,9 +404,61 @@
             </p>
         </div>
     </div>
+
+    <!-- MOBILE VIEW -->
+    <div class="mobile-view" style="display:none">
+        <div class="mob-bg-blur"></div>
+        <div class="mob-cover"></div>
+        <div class="mob-main">
+            <h1 class="mob-title">Светлая княжна тёмного рода. Том #1</h1>
+            <div class="mob-author">Евгения Зимина</div>
+            <a href="https://author.today/reader/480331/4498092" class="mob-read-btn" target="_blank" rel="noopener noreferrer">Читать</a>
+
+            <div class="mob-desc" id="mobDescContent">
+                <div class="mob-desc-inner" id="mobDescInner">
+                    <p style="font-size:15px;line-height:1.6;color:#333;margin-bottom:14px">Екатерина – бастард рода Меньшиковых, обладающая редкой светлой магией в семье, известной своими темными магами.</p>
+                    <p style="font-size:15px;line-height:1.6;color:#333">Ей предстоит доказать, что она достойна возглавить род, несмотря на недоверие, заговоры и свою неопытность.</p>
+                </div>
+            </div>
+
+            <div class="mob-tags" id="mobTagsContent">
+                <div class="mob-tags-inner" id="mobTagsInner">
+                    <div class="mob-genres">
+                        <span class="genre">бояръ-аниме</span>
+                        <span class="genre">романтическое фэнтези</span>
+                        <span class="genre">приключения</span>
+                    </div>
+                    <div class="mob-tags-row">
+                        <span class="tag">#попаданцы</span>
+                        <span class="tag">#женская боярка</span>
+                        <span class="tag">#альтернативная история</span>
+                        <span class="tag">#магия и приключения</span>
+                        <span class="tag">#магическая академия</span>
+                        <span class="tag">#дворянство</span>
+                        <span class="tag">#сильная героиня</span>
+                        <span class="tag">#противостояние характеров</span>
+                        <span class="tag">#интриги</span>
+                        <span class="tag">#политика</span>
+                        <span class="tag">#темная магия</span>
+                        <span class="tag">#светлая магия</span>
+                        <span class="tag">#бастард</span>
+                        <span class="tag">#княжеский род</span>
+                        <span class="tag">#становление героини</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.getElementById('tagsContainer').addEventListener('click', function() {
             document.getElementById('tagsWrapper').classList.toggle('expanded');
+        });
+        document.getElementById('mobDescContent').addEventListener('click', function() {
+            document.getElementById('mobDescInner').classList.toggle('expanded');
+        });
+        document.getElementById('mobTagsContent').addEventListener('click', function() {
+            document.getElementById('mobTagsInner').classList.toggle('expanded');
         });
     </script>
 </body>
