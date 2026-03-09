@@ -236,17 +236,18 @@
                 height: 480px;
                 filter: blur(2px);
                 z-index: 1;
-                opacity: 0.9;
+                opacity: 0;
                 background-image: url('image.jpg');
                 background-size: cover;
                 background-position: center;
+                animation: fadeIn .8s cubic-bezier(.25,.1,.15,1) .1s forwards;
             }
 
             .mob-cover {
                 position: absolute;
                 top: 40px;
                 left: 50%;
-                transform: translateX(-50%);
+                transform: translateX(-50%) translateY(30px) scale(.95);
                 width: 290px;
                 height: 420px;
                 border-radius: 30px;
@@ -255,6 +256,8 @@
                 background-image: url('image.jpg');
                 background-size: cover;
                 background-position: center;
+                opacity: 0;
+                animation: mobCoverIn 1s cubic-bezier(.25,.1,.15,1) .25s forwards;
             }
 
             .mob-main {
@@ -266,6 +269,9 @@
                 z-index: 3;
                 margin-top: 415px;
                 flex: 1;
+                opacity: 0;
+                transform: translateY(40px);
+                animation: mobMainIn 1s cubic-bezier(.25,.1,.15,1) .5s forwards;
             }
 
             .mob-title {
@@ -275,6 +281,9 @@
                 text-align: center;
                 line-height: 1.2;
                 margin-bottom: 8px;
+                opacity: 0;
+                transform: translateY(16px);
+                animation: mobFadeUp .7s cubic-bezier(.25,.1,.15,1) .75s forwards;
             }
             .mob-author {
                 font-size: 18px;
@@ -282,6 +291,9 @@
                 text-align: center;
                 margin-bottom: 18px;
                 font-weight: 600;
+                opacity: 0;
+                transform: translateY(16px);
+                animation: mobFadeUp .7s cubic-bezier(.25,.1,.15,1) .88s forwards;
             }
 
             .mob-read-btn {
@@ -297,6 +309,10 @@
                 text-decoration: none;
                 margin-bottom: 28px;
                 -webkit-tap-highlight-color: transparent;
+                opacity: 0;
+                transform: translateY(16px);
+                animation: mobFadeUp .7s cubic-bezier(.25,.1,.15,1) 1s forwards;
+                transition: background .3s;
             }
             .mob-read-btn:active { background: #222; }
 
@@ -306,6 +322,12 @@
                 color: #333;
                 margin-bottom: 22px;
                 cursor: pointer;
+                -webkit-tap-highlight-color: transparent;
+                user-select: none;
+                -webkit-user-select: none;
+                opacity: 0;
+                transform: translateY(16px);
+                animation: mobFadeUp .7s cubic-bezier(.25,.1,.15,1) 1.12s forwards;
             }
             .mob-desc-inner {
                 max-height: 170px;
@@ -327,12 +349,18 @@
 
             .mob-tags {
                 cursor: pointer;
+                -webkit-tap-highlight-color: transparent;
+                user-select: none;
+                -webkit-user-select: none;
+                opacity: 0;
+                transform: translateY(16px);
+                animation: mobFadeUp .7s cubic-bezier(.25,.1,.15,1) 1.24s forwards;
             }
             .mob-tags-inner {
                 max-height: 135px;
                 overflow: hidden;
                 position: relative;
-                transition: max-height .4s ease;
+                transition: max-height .5s cubic-bezier(.25,.1,.15,1);
             }
             .mob-tags-inner.expanded { max-height: 800px; }
             .mob-tags-inner::after {
@@ -356,6 +384,16 @@
                 display: flex;
                 flex-wrap: wrap;
                 gap: 8px;
+            }
+
+            @keyframes mobCoverIn {
+                to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+            }
+            @keyframes mobMainIn {
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes mobFadeUp {
+                to { opacity: 1; transform: translateY(0); }
             }
         }
     </style>
