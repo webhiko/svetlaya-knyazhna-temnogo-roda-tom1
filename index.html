@@ -334,6 +334,8 @@
                 overflow: hidden;
                 position: relative;
                 transition: max-height .4s ease;
+                padding: 4px 4px 0;
+                margin: -4px -4px 0;
             }
             .mob-desc-inner.expanded { max-height: 1000px; }
             .mob-desc-inner::after {
@@ -361,6 +363,8 @@
                 overflow: hidden;
                 position: relative;
                 transition: max-height .5s cubic-bezier(.25,.1,.15,1);
+                padding: 4px 4px 0;
+                margin: -4px -4px 0;
             }
             .mob-tags-inner.expanded { max-height: 800px; }
             .mob-tags-inner::after {
@@ -385,6 +389,8 @@
                 flex-wrap: wrap;
                 gap: 8px;
             }
+
+            .genre:hover, .tag:hover { transform: none; }
 
             @keyframes mobCoverIn {
                 to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
