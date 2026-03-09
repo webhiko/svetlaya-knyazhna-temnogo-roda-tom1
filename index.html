@@ -48,7 +48,6 @@
             animation: floatIn 1.4s cubic-bezier(.25,.1,.15,1) .15s forwards;
         }
 
-        /* COVER */
         .cover {
             flex: 1 1 300px;
             display: flex;
@@ -67,7 +66,6 @@
         }
         .cover img:hover { transform: scale(1.03) rotate(.5deg); }
 
-        /* INFO */
         .info {
             flex: 1 1 500px;
             padding: 10px 4px 10px 0;
@@ -98,7 +96,6 @@
             animation: fadeUp 1.3s cubic-bezier(.25,.1,.15,1) .6s forwards;
         }
 
-        /* TAGS */
         .tags-genres-container {
             cursor: pointer;
             position: relative;
@@ -161,7 +158,6 @@
         }
         .tag:hover { background: #eaeaea; border-color: #aaa; transform: translateY(-1px) scale(1.02); }
 
-        /* BUTTON */
         .read-button {
             display: block;
             width: 100%;
@@ -184,7 +180,6 @@
         .read-button:hover { background: #222; transform: translateY(-4px) scale(1.01); box-shadow: 0 18px 30px rgba(0,0,0,.2); }
         .read-button:active { transform: translateY(0) scale(.99); box-shadow: 0 4px 12px rgba(0,0,0,.1); transition-duration: .2s; }
 
-        /* DESCRIPTION */
         .description {
             font-size: 1rem;
             line-height: 1.8;
@@ -197,7 +192,6 @@
             animation: fadeUp 1.6s cubic-bezier(.25,.1,.15,1) 1.6s forwards;
         }
 
-        /* ANIMATIONS */
         @keyframes fadeIn    { to { opacity: 1; } }
         @keyframes floatIn   { to { opacity: 1; transform: none; } }
         @keyframes slideLeft { to { opacity: 1; transform: none; } }
@@ -205,7 +199,6 @@
         @keyframes fadeUp    { to { opacity: 1; transform: none; } }
         @keyframes floatUp   { 60% { transform: translateY(-3px); } to { opacity: 1; transform: none; } }
 
-        /* ===== MOBILE ===== */
         @media (max-width: 600px) {
             body {
                 padding: 0;
@@ -216,7 +209,6 @@
             }
             body::before { display: none; }
 
-            /* --- phone UI --- */
             .book-card { display: none; }
 
             .mobile-view {
@@ -317,9 +309,6 @@
             .mob-read-btn:active { background: #222; }
 
             .mob-desc {
-                font-size: 15px;
-                line-height: 1.6;
-                color: #333;
                 margin-bottom: 22px;
                 cursor: pointer;
                 -webkit-tap-highlight-color: transparent;
@@ -329,16 +318,17 @@
                 transform: translateY(16px);
                 animation: mobFadeUp .7s cubic-bezier(.25,.1,.15,1) 1.12s forwards;
             }
-            .mob-desc-inner {
-                max-height: 170px;
+
+            .mob-desc-clip {
                 overflow: hidden;
                 position: relative;
+                max-height: 178px;
                 transition: max-height .4s ease;
-                padding: 4px 4px 0;
-                margin: -4px -4px 0;
+                padding: 8px 8px 12px;
+                margin: -8px -8px 0;
             }
-            .mob-desc-inner.expanded { max-height: 1000px; }
-            .mob-desc-inner::after {
+            .mob-desc-clip.expanded { max-height: 1016px; }
+            .mob-desc-clip::after {
                 content: '';
                 position: absolute;
                 bottom: 0; left: 0; right: 0;
@@ -347,7 +337,15 @@
                 transition: opacity .3s;
                 pointer-events: none;
             }
-            .mob-desc-inner.expanded::after { opacity: 0; }
+            .mob-desc-clip.expanded::after { opacity: 0; }
+
+            .mob-desc-inner {
+                font-size: 15px;
+                line-height: 1.6;
+                color: #333;
+            }
+            .mob-desc-inner p { margin-bottom: 14px; }
+            .mob-desc-inner p:last-child { margin-bottom: 0; }
 
             .mob-tags {
                 cursor: pointer;
@@ -358,16 +356,17 @@
                 transform: translateY(16px);
                 animation: mobFadeUp .7s cubic-bezier(.25,.1,.15,1) 1.24s forwards;
             }
-            .mob-tags-inner {
-                max-height: 135px;
+
+            .mob-tags-clip {
                 overflow: hidden;
                 position: relative;
+                max-height: 158px;
                 transition: max-height .5s cubic-bezier(.25,.1,.15,1);
-                padding: 4px 4px 0;
-                margin: -4px -4px 0;
+                padding: 8px 8px 12px;
+                margin: -8px -8px 0;
             }
-            .mob-tags-inner.expanded { max-height: 800px; }
-            .mob-tags-inner::after {
+            .mob-tags-clip.expanded { max-height: 808px; }
+            .mob-tags-clip::after {
                 content: '';
                 position: absolute;
                 bottom: 0; left: 0; right: 0;
@@ -376,7 +375,7 @@
                 transition: opacity .3s;
                 pointer-events: none;
             }
-            .mob-tags-inner.expanded::after { opacity: 0; }
+            .mob-tags-clip.expanded::after { opacity: 0; }
 
             .mob-genres {
                 display: flex;
@@ -389,8 +388,6 @@
                 flex-wrap: wrap;
                 gap: 8px;
             }
-
-            .genre:hover, .tag:hover { transform: none; }
 
             @keyframes mobCoverIn {
                 to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
@@ -449,7 +446,6 @@
         </div>
     </div>
 
-    <!-- MOBILE VIEW -->
     <div class="mobile-view" style="display:none">
         <div class="mob-bg-blur"></div>
         <div class="mob-cover"></div>
@@ -459,35 +455,39 @@
             <a href="https://author.today/reader/480331/4498092" class="mob-read-btn" target="_blank" rel="noopener noreferrer">Читать</a>
 
             <div class="mob-desc" id="mobDescContent">
-                <div class="mob-desc-inner" id="mobDescInner">
-                    <p style="font-size:15px;line-height:1.6;color:#333;margin-bottom:14px">Екатерина – бастард рода Меньшиковых, обладающая редкой светлой магией в семье, известной своими темными магами.</p>
-                    <p style="font-size:15px;line-height:1.6;color:#333">Ей предстоит доказать, что она достойна возглавить род, несмотря на недоверие, заговоры и свою неопытность.</p>
+                <div class="mob-desc-clip" id="mobDescClip">
+                    <div class="mob-desc-inner">
+                        <p>Екатерина – бастард рода Меньшиковых, обладающая редкой светлой магией в семье, известной своими темными магами.</p>
+                        <p>Ей предстоит доказать, что она достойна возглавить род, несмотря на недоверие, заговоры и свою неопытность.</p>
+                    </div>
                 </div>
             </div>
 
             <div class="mob-tags" id="mobTagsContent">
-                <div class="mob-tags-inner" id="mobTagsInner">
-                    <div class="mob-genres">
-                        <span class="genre">бояръ-аниме</span>
-                        <span class="genre">романтическое фэнтези</span>
-                        <span class="genre">приключения</span>
-                    </div>
-                    <div class="mob-tags-row">
-                        <span class="tag">#попаданцы</span>
-                        <span class="tag">#женская боярка</span>
-                        <span class="tag">#альтернативная история</span>
-                        <span class="tag">#магия и приключения</span>
-                        <span class="tag">#магическая академия</span>
-                        <span class="tag">#дворянство</span>
-                        <span class="tag">#сильная героиня</span>
-                        <span class="tag">#противостояние характеров</span>
-                        <span class="tag">#интриги</span>
-                        <span class="tag">#политика</span>
-                        <span class="tag">#темная магия</span>
-                        <span class="tag">#светлая магия</span>
-                        <span class="tag">#бастард</span>
-                        <span class="tag">#княжеский род</span>
-                        <span class="tag">#становление героини</span>
+                <div class="mob-tags-clip" id="mobTagsClip">
+                    <div class="mob-tags-inner">
+                        <div class="mob-genres">
+                            <span class="genre">бояръ-аниме</span>
+                            <span class="genre">романтическое фэнтези</span>
+                            <span class="genre">приключения</span>
+                        </div>
+                        <div class="mob-tags-row">
+                            <span class="tag">#попаданцы</span>
+                            <span class="tag">#женская боярка</span>
+                            <span class="tag">#альтернативная история</span>
+                            <span class="tag">#магия и приключения</span>
+                            <span class="tag">#магическая академия</span>
+                            <span class="tag">#дворянство</span>
+                            <span class="tag">#сильная героиня</span>
+                            <span class="tag">#противостояние характеров</span>
+                            <span class="tag">#интриги</span>
+                            <span class="tag">#политика</span>
+                            <span class="tag">#темная магия</span>
+                            <span class="tag">#светлая магия</span>
+                            <span class="tag">#бастард</span>
+                            <span class="tag">#княжеский род</span>
+                            <span class="tag">#становление героини</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -499,10 +499,10 @@
             document.getElementById('tagsWrapper').classList.toggle('expanded');
         });
         document.getElementById('mobDescContent').addEventListener('click', function() {
-            document.getElementById('mobDescInner').classList.toggle('expanded');
+            document.getElementById('mobDescClip').classList.toggle('expanded');
         });
         document.getElementById('mobTagsContent').addEventListener('click', function() {
-            document.getElementById('mobTagsInner').classList.toggle('expanded');
+            document.getElementById('mobTagsClip').classList.toggle('expanded');
         });
     </script>
 </body>
